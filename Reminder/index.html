@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Reminder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main">
+        <h1>Set a Reminder</h1>
+        <label id="label" for="reminder-date">Choose a date and time:</label>
+        <input type="datetime-local" id="reminder-date">
+        <button id="btn" onclick="setReminder()">Set Reminder</button>
+    </div>
+   
+
+    <script>
+        function setReminder() {
+            // Getting input date and time from user
+            const inputDate = new Date(document.getElementById('reminder-date').value);
+            const currentDate = new Date();
+
+            // Checking if the input date is valid
+            if (inputDate > currentDate) {
+                const timeDifference = inputDate - currentDate;
+
+                //setting timeout to triiger specified reminder for specified date and time
+                setTimeout(() => {
+                    speakReminder();
+                }, timeDifference);
+
+                alert("Reminder set successfully!");
+            } else {
+                alert("Please choose a future date and time.");
+            }
+        }
+
+        function speakReminder() {
+            // Create a speech synthesis instance
+            const msg = new SpeechSynthesisUtterance();
+            // Passed text will be pronounced
+            msg.text = "Hey WakeUp Dude..This is your reminder";
+            window.speechSynthesis.speak(msg);
+        }
+    </script>
+</body>
+</html>
